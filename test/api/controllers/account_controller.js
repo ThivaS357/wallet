@@ -41,11 +41,68 @@ describe( 'controllers', function() {
 
         } ) ;
 
-        /*describe( 'POST /accounts/{id}', function() {
-            it( 'Should return saved account', function(done) {
+        describe( 'POST /accounts/{id}', function() {
+            it( 'Should add a reload', function(done) {
+                request( server )
+                    .post( '/accounts' )
+                    .set( 'Accept', 'application/json' )
+                    .send( { name:'test' } )
+                    .expect( 'Content-Type', /json/ )
+                    .expect(200 )
+                    .end(function ( err, res ) {
+                        should.not.exist( err ) ;
 
+                        let id = res.body.data._id;
+
+                        request( server )
+                            .post( '/accounts/'+id )
+                            .set( 'Accept', 'application/json' )
+                            .send( { amount: 100 } )
+                            .expect( 'Content-Type', /json/ )
+                            .expect(200 )
+                            .end(function ( err, res ) {
+                                should.not.exist( err ) ;
+                                done() ;
+                            } ) ;
+
+                    } ) ;
             } ) ;
-        } ) ;*/
+
+            it( 'Should reduct a ammount', function(done) {
+                request( server )
+                    .post( '/accounts' )
+                    .set( 'Accept', 'application/json' )
+                    .send( { name:'test' } )
+                    .expect( 'Content-Type', /json/ )
+                    .expect(200 )
+                    .end(function ( err, res ) {
+                        should.not.exist( err ) ;
+
+                        let id = res.body.data._id;
+
+                        request( server )
+                            .post( '/accounts/'+id )
+                            .set( 'Accept', 'application/json' )
+                            .send( { amount: 100 } )
+                            .expect( 'Content-Type', /json/ )
+                            .expect(200 )
+                            .end(function ( err, res ) {
+                                should.not.exist( err ) ;
+                                request( server )
+                                    .put( '/accounts/'+id )
+                                    .set( 'Accept', 'application/json' )
+                                    .send( { reduction: 30 } )
+                                    .expect( 'Content-Type', /json/ )
+                                    .expect(200 )
+                                    .end(function ( err, res ) {
+                                        should.not.exist( err ) ;
+                                        done();
+                                    } ) ;
+                            } ) ;
+
+                    } ) ;
+            } ) ;
+        } ) ;
 
     } ) ;
 
