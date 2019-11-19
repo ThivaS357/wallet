@@ -56,6 +56,124 @@ paths:
           schema:
             $ref: "#/definitions/ErrorResponse"
 
+  /accounts/{id}:
+    x-swagger-router-controller: account_controller
+    post:
+      operationId: reload
+      description: "Reload a account"
+      tags:
+        - API
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+
+        - in: body
+          name: "ReloadAccount"
+          schema:
+            $ref: "#/definitions/ReloadAccount"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Response"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "403":
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    put:
+      operationId: useMoney
+      description: "use money"
+      tags:
+        - API
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+
+        - in: body
+          name: "UseAccount"
+          schema:
+            $ref: "#/definitions/UseAccount"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Response"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "403":
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+    get:
+      operationId: get
+      description: "get Account"
+      tags:
+        - API
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Response"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "403":
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+  /accounts/promo/{id}/{type}:
+    x-swagger-router-controller: account_controller
+    get:
+      operationId: applyPromo
+      description: "Apply a Promo"
+      tags:
+        - API
+      parameters:
+        - in: path
+          name: id
+          type: string
+          required: true
+
+        - in: path
+          name: type
+          type: number
+          required: true
+          minimum: 2
+          maximum: 2
+
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Response"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "403":
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
 
   /swagger:
     x-swagger-pipe: swagger_raw
@@ -81,3 +199,19 @@ definitions:
     properties:
       name:
         type: string
+
+  ReloadAccount:
+    required:
+      - amount
+    properties:
+      amount:
+        type: number
+        minimum: 1
+
+  UseAccount:
+    required:
+      - reduction
+    properties:
+      reduction:
+        type: number
+        minimum: 1

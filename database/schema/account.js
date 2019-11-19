@@ -22,7 +22,14 @@ const accountSchema = new mongoose.Schema(
             type: Number,
             default: 0.0
         },
-        promotionApplied: Number // 0 no promo, 1 welcome promo, 2 salt promo
+        promotionExprDate: {
+            type: Date,
+            default: null
+        },
+        promotionApplied: {
+            type: Number,
+            default: 1
+        } // 0 no promo, 1 welcome promo, 2 salt promo
     }
 ) ;
 

@@ -41,6 +41,12 @@ describe( 'controllers', function() {
 
         } ) ;
 
+        /*describe( 'POST /accounts/{id}', function() {
+            it( 'Should return saved account', function(done) {
+
+            } ) ;
+        } ) ;*/
+
     } ) ;
 
 } ) ;
