@@ -20,7 +20,7 @@ databaseUnityOperations.connect = () => {
 
         console.log( '|| ..... Connecting to mongodb server..... ||' ) ;
 
-        mongoose.connect( url, { useNewUrlParser: true, useCreateIndex: true }, ( error, connection ) => {
+        mongoose.connect( url, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }, ( error, connection ) => {
 
             assert.equal( null, error ) ;
 

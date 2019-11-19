@@ -3,7 +3,7 @@ info:
   version: "0.0.1"
   title: API base system
 # during dev, should point to your local machine
-host: localhost:9000
+host: localhost:7100
 # basePath prefixes all resource paths 
 basePath: /
 # 
@@ -30,23 +30,23 @@ produces:
   - application/json
 paths:
 
-  /handshake:
-    x-swagger-router-controller: common_controller
+  /accounts:
+    x-swagger-router-controller: account_controller
     post:
-      operationId: initialHandshake
-      description: "Initial Handshake to get visitor token"
+      operationId: create
+      description: "Create an account"
       tags:
         - API
       parameters:
         - in: body
-          name: "Handshake"
+          name: "CreateAccount"
           schema:
-           $ref: "#/definitions/Handshake"
+           $ref: "#/definitions/CreateAccount"
       responses:
         "200":
           description: "OK"
           schema:
-            $ref: "#/definitions/Token"
+            $ref: "#/definitions/Response"
         "400":
           description: "Bad Request"
           schema:
@@ -69,22 +69,15 @@ definitions:
       message:
         type: string
 
-  Handshake:
-    required:
-      - deviceId
-    properties:
-      deviceId:
-        $ref: "#/definitions/DeviceId"
-
-  Token:
+  Response:
     type: object
     properties:
-      token:
+      message:
         type: string
 
-  DeviceId:
-    type: string
-    example: "20867A57-0222-44CB-9828-FEA49F89B16D"
-    description: "mobile deviceId"
-    minLength: 8
-    maxLength: 36
+  CreateAccount:
+    required:
+      - name
+    properties:
+      name:
+        type: string

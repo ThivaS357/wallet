@@ -1,16 +1,10 @@
 {
-  "token" : {
-    "sharedSecret": "APIBase",
-    "issuer": "API Base Team",
-    "visitorExpireTime": 300,
-    "expireTime" : 86400
-  },
   "database": {
     "dbURLPrefix": "mongodb://",
     "username": "test",
     "password": "12345",
     "host": "localhost",
-    "database": "apiBase"
+    "database": "wallet"
   },
   "response": {
     "user": {}
