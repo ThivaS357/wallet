@@ -1,0 +1,90 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: API base system
+# during dev, should point to your local machine
+host: localhost:9000
+# basePath prefixes all resource paths 
+basePath: /
+# 
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+
+securityDefinitions:
+  Bearer:
+    type: apiKey
+    name: Authorization
+    in: header
+    description: |
+      For accessing the API a valid JWT token must be passed in all the queries in
+      the 'Authorization' header.
+
+
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+paths:
+
+  /handshake:
+    x-swagger-router-controller: common_controller
+    post:
+      operationId: initialHandshake
+      description: "Initial Handshake to get visitor token"
+      tags:
+        - API
+      parameters:
+        - in: body
+          name: "Handshake"
+          schema:
+           $ref: "#/definitions/Handshake"
+      responses:
+        "200":
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Token"
+        "400":
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+        "403":
+          description: "Forbidden"
+          schema:
+            $ref: "#/definitions/ErrorResponse"
+
+
+  /swagger:
+    x-swagger-pipe: swagger_raw
+# complex objects have schema definitions
+definitions:
+
+  ErrorResponse:
+    required:
+      - message
+    properties:
+      message:
+        type: string
+
+  Handshake:
+    required:
+      - deviceId
+    properties:
+      deviceId:
+        $ref: "#/definitions/DeviceId"
+
+  Token:
+    type: object
+    properties:
+      token:
+        type: string
+
+  DeviceId:
+    type: string
+    example: "20867A57-0222-44CB-9828-FEA49F89B16D"
+    description: "mobile deviceId"
+    minLength: 8
+    maxLength: 36
